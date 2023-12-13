@@ -1,0 +1,2 @@
+String URL_PW = '3936ba8053cc1231b1c1e5b174f9e9e5';
+String HEADER_PW = 'e3b3c33dfa160a46930915f3724be30e';
