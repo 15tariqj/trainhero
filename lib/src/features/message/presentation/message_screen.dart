@@ -59,9 +59,6 @@ class _MessageScreenState extends State<MessageScreen>
               flex: 6,
               child: Container(),
             ),
-            // SizedBox(
-            //   height: 40,
-            // ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: AnimatedBuilder(
