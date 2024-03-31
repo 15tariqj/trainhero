@@ -4,6 +4,7 @@ import 'package:trainhero/dev_screen.dart';
 import 'package:trainhero/src/features/authentication/data/auth_repository.dart';
 import 'package:trainhero/src/features/home/presentation/home_screen.dart';
 import 'package:trainhero/src/features/landing/presentation/landing_screen.dart';
+import 'package:trainhero/src/features/loading_ticket/presentation/loading_ticket_screen.dart';
 import 'package:trainhero/src/features/mail/presentation/mail_screen.dart';
 import 'package:trainhero/src/features/settings/presentation/settings_screen.dart';
 import 'package:trainhero/src/routing/go_router_refresh_stream.dart';
@@ -17,6 +18,7 @@ enum AppRoute {
   landing,
   mail,
   settings,
+  loadingTicket,
 }
 
 @Riverpod(keepAlive: true)
@@ -65,6 +67,11 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/settings',
         name: AppRoute.settings.name,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: '/loadingTicket',
+        name: AppRoute.loadingTicket.name,
+        builder: (context, state) => const LoadingTicketScreen(),
       )
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),
