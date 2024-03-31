@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:trainhero/src/constants/app_sizes.dart';
 import 'package:trainhero/src/features/mail/domain/onboarding_data.dart';
 
-class Onboarding extends StatelessWidget {
+class MailPage extends StatelessWidget {
   final OnboardingData data;
 
-  const Onboarding({
+  const MailPage({
     Key? key,
     required this.data,
   }) : super(key: key);

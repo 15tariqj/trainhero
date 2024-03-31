@@ -10,19 +10,35 @@ class DevScreen extends StatelessWidget {
     return Column(
       children: [
         TextButton(
-          onPressed: () => GoRouter.of(context).goNamed(AppRoute.landing.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.landing.name),
           child: Container(
             color: Colors.red,
             child: const Text("Landing screen"),
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).goNamed(AppRoute.mail.name),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.mail.name),
           child: Container(
             color: Colors.red,
             child: const Text("Mail screen"),
           ),
-        )
+        ),
+        TextButton(
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.home.name),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Home screen"),
+          ),
+        ),
+        TextButton(
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.settings.name),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Settings screen"),
+          ),
+        ),
       ],
     );
   }

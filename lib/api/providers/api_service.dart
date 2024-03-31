@@ -1,8 +1,7 @@
 import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
-import 'package:trainhero/env.dart';
 
 final apiServiceProvider = Provider<APIService>((ref) {
   return APIService();
@@ -17,8 +16,10 @@ class APIService {
     String phoneNo,
     String pushToken,
   ) async {
+    String urlPw = dotenv.env['URL_PW'] ?? '';
+    String headerPw = dotenv.env['HEADER_PW'] ?? '';
     try {
-      var headers = {'hp': HEADER_PW};
+      var headers = {'hp': headerPw};
       var data = jsonEncode({
         'email': email,
         'password': password,
@@ -30,7 +31,7 @@ class APIService {
 
       var dio = Dio();
       var response = await dio.request(
-        'http://auth.trainhero.uk/register/$URL_PW',
+        'http://auth.trainhero.uk/register/$urlPw',
         options: Options(
           method: 'POST',
           headers: headers,

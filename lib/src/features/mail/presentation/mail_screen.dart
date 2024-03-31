@@ -6,7 +6,7 @@ import 'dart:io' show Platform;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:trainhero/src/constants/app_sizes.dart';
 import 'package:trainhero/src/features/mail/domain/onboarding_data.dart';
-import 'package:trainhero/src/features/mail/presentation/onboarding.dart';
+import 'package:trainhero/src/features/mail/presentation/mail_page.dart';
 
 class MailScreen extends StatefulWidget {
   const MailScreen({super.key});
@@ -18,7 +18,7 @@ class MailScreen extends StatefulWidget {
 class _MailScreenState extends State<MailScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _buttonController;
-  late PageController _pageController;
+  final PageController _pageController = PageController();
   int currentPage = 0;
 
   List<OnboardingData> pageData = [
@@ -39,8 +39,6 @@ class _MailScreenState extends State<MailScreen>
   bool sheetDown = true;
   bool animationForward = true;
   bool animationReverse = false;
-
-  void scrollListener() {}
 
   void animationListener() async {
     if (animationForward) {
@@ -83,8 +81,6 @@ class _MailScreenState extends State<MailScreen>
   @override
   void initState() {
     super.initState();
-    _pageController = PageController()..addListener(scrollListener);
-
     _buttonController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -98,11 +94,10 @@ class _MailScreenState extends State<MailScreen>
         child: Column(
           children: [
             Expanded(
-              flex: 3,
               child: PageView.builder(
                 controller: _pageController,
                 itemBuilder: (context, index) {
-                  return Onboarding(
+                  return MailPage(
                     data: pageData[index],
                   );
                 },
@@ -115,70 +110,54 @@ class _MailScreenState extends State<MailScreen>
               ),
             ),
             Expanded(
-              flex: 2,
               child: AnimatedBuilder(
                 animation: _buttonController,
                 builder: (context, child) {
                   return Column(
                     children: [
+                      gapH8,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _pageDot(index: 0),
+                          _buildDot(index: 0),
                           gapW8,
-                          _pageDot(index: 1),
+                          _buildDot(index: 1),
                         ],
                       ),
                       const Spacer(),
                       FadeTransition(
                         opacity: Tween<double>(begin: 1, end: 0).animate(
-                            CurvedAnimation(
-                                parent: _buttonController,
-                                curve: Curves.easeInOutCubic)),
+                          CurvedAnimation(
+                            parent: _buttonController,
+                            curve: Curves.easeInOutCubic,
+                          ),
+                        ),
                         child: SlideTransition(
                           position: Tween<Offset>(
-                                  begin: const Offset(0, 0),
-                                  end: const Offset(0, 1))
-                              .animate(CurvedAnimation(
-                                  parent: _buttonController,
-                                  curve: Curves.easeInOutCubic)),
+                            begin: const Offset(0, 0),
+                            end: const Offset(0, 1),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _buttonController,
+                              curve: Curves.easeInOutCubic,
+                            ),
+                          ),
                           child: Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(Sizes.p24),
-                                // EdgeInsets.all(scaledSafeWidth(24.0)),
-                                child: Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'For future reference, you can skip to this step by just directly sharing the eticket pdf to trainhero!',
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.nunito(
-                                      color: Colors.white70,
-                                      fontSize: Sizes.p14,
-                                    ),
-                                  ),
-                                ),
-                              ),
                               SizedBox(
-                                width: Sizes.p64 * 3,
+                                height: Sizes.p48,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xffDEDCEF),
                                   ),
-                                  child: Center(
-                                    child: AutoSizeText(
-                                      "Go to Email App",
-                                      style: GoogleFonts.nunito(
-                                        textStyle: const TextStyle(
-                                          fontSize: Sizes.p16,
-                                          color: Color(0xff313143),
-                                        ),
-                                      ),
+                                  child: AutoSizeText(
+                                    "Go to Email App",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: Sizes.p16,
+                                      color: const Color(0xff313143),
                                     ),
                                   ),
                                   onPressed: () async {
-                                    // Android: Will open mail app or show native picker.
-                                    // iOS: Will open mail app if single mail app found.
                                     var result =
                                         await OpenMailApp.openMailApp();
 
@@ -199,6 +178,20 @@ class _MailScreenState extends State<MailScreen>
                                   },
                                 ),
                               ),
+                              Padding(
+                                padding: const EdgeInsets.all(Sizes.p24),
+                                child: Container(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Pssst, you can skip this step by directly sharing the eTicket PDF to TrainHero!',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.nunito(
+                                      color: Colors.white70,
+                                      fontSize: Sizes.p12,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -214,12 +207,12 @@ class _MailScreenState extends State<MailScreen>
     );
   }
 
-  AnimatedContainer _pageDot({required int index}) {
+  AnimatedContainer _buildDot({required int index}) {
     return AnimatedContainer(
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
-      height: 6,
-      width: 6,
+      height: Sizes.p6,
+      width: Sizes.p6,
       decoration: BoxDecoration(
         color:
             currentPage == index ? Colors.white : Colors.white.withOpacity(0.4),
@@ -233,9 +226,10 @@ class _MailScreenState extends State<MailScreen>
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Open Mail App"),
-          content: const Text("No mail apps installed"),
-          actions: <Widget>[
+          title: const Text("Sorry!"),
+          content:
+              const Text("It appears as if you have no mail apps installed."),
+          actions: [
             TextButton(
               child: const Text("OK"),
               onPressed: () {
@@ -268,7 +262,7 @@ class MailAppOptions extends StatelessWidget {
       padding: const EdgeInsets.symmetric(), //horizontal: scaledSafeWidth(24)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: [
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -280,43 +274,36 @@ class MailAppOptions extends StatelessWidget {
                   color: const Color(0xffA3A3C9)),
             ),
           ),
-          const SizedBox(
-              // height: scaledSafeHeight(29),
-              ),
+          gapH32,
           Text(
             "Choose your Mail app",
             style: GoogleFonts.nunito(
-              textStyle: const TextStyle(
-                  // fontSize: scaledSafeWidth(28),
-                  color: Color(0xff343435),
-                  fontWeight: FontWeight.w800),
+              fontSize: Sizes.p24,
+              color: const Color(0xff343435),
+              fontWeight: FontWeight.w800,
             ),
           ),
-          const SizedBox(
-              // height: scaledSafeHeight(18),
-              ),
+          gapH20,
           for (var app in mailApps)
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                ), //scaledSafeHeight(5.0))
-                child: Text(app.name,
-                    style: GoogleFonts.nunito(
-                      textStyle: const TextStyle(
-                        // fontSize: scaledSafeWidth(24),
-                        color: Color(0xff565668),
-                      ),
-                    )),
+                  vertical: Sizes.p12,
+                ),
+                child: Text(
+                  app.name,
+                  style: GoogleFonts.nunito(
+                    fontSize: Sizes.p24,
+                    color: const Color(0xff565668),
+                  ),
+                ),
               ),
               onTap: () {
-                //OpenMailApp.openSpecificMailApp(app);
-                //Navigator.pop(context);
+                OpenMailApp.openSpecificMailApp(app);
+                Navigator.pop(context);
               },
             ),
-          const SizedBox(
-            height: 70,
-          ),
+          gapH64,
         ],
       ),
     );

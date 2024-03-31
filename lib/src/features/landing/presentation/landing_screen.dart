@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trainhero/src/constants/app_sizes.dart';
+import 'package:trainhero/src/routing/app_router.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -40,7 +42,7 @@ class _LandingScreenState extends State<LandingScreen>
               return SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: [
                     _buildTitle(constraints),
                     _buildLogo(),
                     _buildButton(),
@@ -85,20 +87,19 @@ class _LandingScreenState extends State<LandingScreen>
           child: Column(
             children: [
               TextButton(
-                onPressed: () {
-                  // TODO: Route to mail screen
-                },
+                onPressed: () =>
+                    GoRouter.of(context).pushNamed(AppRoute.mail.name),
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     color: const Color(0xffEADCFF),
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
                       "Get Started",
-                      style: TextStyle(
-                        color: Color(0xff3B3949),
+                      style: GoogleFonts.nunito(
+                        color: const Color(0xff3B3949),
                         fontSize: Sizes.p16,
                       ),
                     ),
@@ -106,11 +107,11 @@ class _LandingScreenState extends State<LandingScreen>
                 ),
               ),
               gapH32,
-              const Text(
+              Text(
                 "Any queries? Contact us at\n"
                 "help@trainhero.uk",
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: GoogleFonts.nunito(
                   color: Colors.white,
                   fontSize: Sizes.p14,
                 ),
@@ -174,29 +175,27 @@ class _LandingScreenState extends State<LandingScreen>
         ),
       ),
       child: Column(
-        children: <Widget>[
+        children: [
+          gapH80,
           AnimatedContainer(
             curve: Curves.fastLinearToSlowEaseIn,
             duration: const Duration(milliseconds: 1000),
-            margin: EdgeInsets.only(
-              top: constraints.maxHeight / 7.374,
-            ),
-            child: const Text(
+            child: Text(
               "Claim in seconds",
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 color: Colors.white,
-                fontSize: 28,
+                fontSize: Sizes.p24,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Container(
-            margin: const EdgeInsets.all(30),
-            padding: const EdgeInsets.symmetric(horizontal: 32),
-            child: const Text(
+            margin: const EdgeInsets.all(Sizes.p32),
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.p32),
+            child: Text(
               "Complete your claim in seconds with trainhero.",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.nunito(
                 color: Colors.white,
                 fontSize: Sizes.p16,
               ),

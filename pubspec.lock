@@ -278,6 +278,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_dash:
+    dependency: "direct main"
+    description:
+      name: flutter_dash
+      sha256: dc282109cc12806853e102a4e8b9d99abb7f527fcedec2ea03860e2500ee6622
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  flutter_dotenv:
+    dependency: "direct main"
+    description:
+      name: flutter_dotenv
+      sha256: "9357883bdd153ab78cbf9ffa07656e336b8bbb2b5a3ca596b0b27e119f7c7d77"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.1.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -592,6 +608,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  receive_sharing_intent:
+    dependency: "direct main"
+    description:
+      name: receive_sharing_intent
+      sha256: "8fdf5927934041264becf65199ef8057b8b176e879d95ffa0420cd2a6219c0fd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.7"
   riverpod:
     dependency: transitive
     description:
@@ -656,6 +680,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  shimmer_animation:
+    dependency: "direct main"
+    description:
+      name: shimmer_animation
+      sha256: "1f12d0f3fc20acbf2dcf8438b79f4268c523d55b2f3de55cf49e5bd3acbc5719"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0+1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -766,13 +798,13 @@ packages:
     source: hosted
     version: "1.3.2"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
-      sha256: e9aa5ea75c84cf46b3db4eea212523591211c3cf2e13099ee4ec147f54201c86
+      sha256: "0ecc004c62fd3ed36a2ffcbe0dd9700aee63bd7532d0b642a488b1ec310f492e"
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.2"
+    version: "6.2.5"
   url_launcher_android:
     dependency: transitive
     description:

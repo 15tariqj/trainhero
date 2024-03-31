@@ -2,14 +2,22 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trainhero/dev_screen.dart';
 import 'package:trainhero/src/features/authentication/data/auth_repository.dart';
+import 'package:trainhero/src/features/home/presentation/home_screen.dart';
 import 'package:trainhero/src/features/landing/presentation/landing_screen.dart';
 import 'package:trainhero/src/features/mail/presentation/mail_screen.dart';
+import 'package:trainhero/src/features/settings/presentation/settings_screen.dart';
 import 'package:trainhero/src/routing/go_router_refresh_stream.dart';
 import 'package:trainhero/src/routing/not_found_screen.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { landing, dev, mail }
+enum AppRoute {
+  dev,
+  home,
+  landing,
+  mail,
+  settings,
+}
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
@@ -48,6 +56,16 @@ GoRouter goRouter(GoRouterRef ref) {
         name: AppRoute.mail.name,
         builder: (context, state) => const MailScreen(),
       ),
+      GoRoute(
+        path: '/home',
+        name: AppRoute.home.name,
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/settings',
+        name: AppRoute.settings.name,
+        builder: (context, state) => const SettingsScreen(),
+      )
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),
   );
