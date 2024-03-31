@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trainhero/dev_screen.dart';
 import 'package:trainhero/src/features/authentication/data/auth_repository.dart';
+import 'package:trainhero/src/features/flexible_ticket/presentation/flexible_ticket_screen.dart';
 import 'package:trainhero/src/features/home/presentation/home_screen.dart';
 import 'package:trainhero/src/features/landing/presentation/landing_screen.dart';
 import 'package:trainhero/src/features/loading_ticket/presentation/loading_ticket_screen.dart';
@@ -21,6 +22,7 @@ enum AppRoute {
   settings,
   loadingTicket,
   message,
+  flexibleTicket,
 }
 
 @Riverpod(keepAlive: true)
@@ -83,6 +85,11 @@ GoRouter goRouter(GoRouterRef ref) {
           heading: state.pathParameters['heading'] ?? '',
           image: state.pathParameters['image'] ?? '',
         ),
+      ),
+      GoRoute(
+        path: '/flexibleTicket',
+        name: AppRoute.flexibleTicket.name,
+        builder: (context, state) => FlexibleTicketScreen(),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),

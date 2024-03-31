@@ -1,38 +1,36 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:trainhero/src/features/authentication/domain/app_user.dart';
+import 'package:trainhero/src/features/authentication/domain/user.dart';
 import 'package:trainhero/src/utils/in_memory_store.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:dio/dio.dart';
 
 part 'auth_repository.g.dart';
 
 class AuthRepository {
-  final _authState = InMemoryStore<AppUser?>(null);
+  final _authState = InMemoryStore<User?>(null);
 
-  Stream<AppUser?> authStateChanges() => _authState.stream;
-  AppUser? get currentUser => _authState.value;
+  Stream<User?> authStateChanges() => _authState.stream;
+  User? get currentUser => _authState.value;
 
-  Future<bool>? emailAlreadyRegistered({
+  Future<bool?>? emailAlreadyRegistered({
     required String email,
   }) async {
-    final dio = Dio();
-    String urlPw = dotenv.env['URL_PW'] ?? '';
-    String headerPw = dotenv.env['HEADER_PW'] ?? '';
-    Response<dynamic> response = await dio.get(
-      'https://auth.trainhero.uk/checkEmail/$urlPw',
-      options: Options(
-        headers: {
-          "hp": headerPw,
-        },
-      ),
-      data: {
-        "email": email,
-      },
-    );
-    return response.data['emailAlreadyRegistered'] == 1;
+    // final dio = Dio();
+    // String urlPw = dotenv.env['URL_PW'] ?? '';
+    // String headerPw = dotenv.env['HEADER_PW'] ?? '';
+    // Response<dynamic> response = await dio.get(
+    //   'https://auth.trainhero.uk/checkEmail/$urlPw',
+    //   options: Options(
+    //     headers: {
+    //       "hp": headerPw,
+    //     },
+    //   ),
+    //   data: {
+    //     "email": email,
+    //   },
+    // );
+    return null;
   }
 
-  Future<AppUser>? registerUser({
+  Future<User?>? registerUser({
     required String email,
     required String password,
     required String firstName,
@@ -43,7 +41,7 @@ class AuthRepository {
     return null;
   }
 
-  Future<AppUser?>? login({
+  Future<User?>? login({
     required String email,
     required String password,
   }) {
@@ -70,7 +68,7 @@ AuthRepository authRepository(AuthRepositoryRef ref) {
 }
 
 @Riverpod(keepAlive: true)
-Stream<AppUser?> authStateChanges(AuthStateChangesRef ref) {
+Stream<User?> authStateChanges(AuthStateChangesRef ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return authRepository.authStateChanges();
 }

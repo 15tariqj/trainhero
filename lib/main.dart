@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +36,13 @@ class _MyAppState extends ConsumerState<MyApp> {
         _sharedFiles.addAll(value);
 
         print(_sharedFiles.map((f) => f.toMap()));
+
+        // Navigate to the loadingTicket screen when a file is received
+        if (_sharedFiles.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref.read(goRouterProvider).goNamed(AppRoute.loadingTicket.name);
+          });
+        }
       });
     }, onError: (err) {
       print("getIntentDataStream error: $err");
@@ -51,6 +57,13 @@ class _MyAppState extends ConsumerState<MyApp> {
 
         // Tell the library that we are done processing the intent.
         ReceiveSharingIntent.reset();
+
+        if (_sharedFiles.isNotEmpty) {
+          // Navigate to the loadingTicket screen when a file is received
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref.read(goRouterProvider).goNamed(AppRoute.loadingTicket.name);
+          });
+        }
       });
     });
   }
@@ -60,7 +73,7 @@ class _MyAppState extends ConsumerState<MyApp> {
     _intentSub.cancel();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final goRouter = ref.watch(goRouterProvider);

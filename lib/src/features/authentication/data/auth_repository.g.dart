@@ -21,11 +21,11 @@ final authRepositoryProvider = Provider<AuthRepository>.internal(
 );
 
 typedef AuthRepositoryRef = ProviderRef<AuthRepository>;
-String _$authStateChangesHash() => r'70d96078e41cd44270b2118f16bcbed842f33064';
+String _$authStateChangesHash() => r'5ffc305cc4e8a1dfe627d4476fbcf1d65f9af66c';
 
 /// See also [authStateChanges].
 @ProviderFor(authStateChanges)
-final authStateChangesProvider = StreamProvider<AppUser?>.internal(
+final authStateChangesProvider = StreamProvider<User?>.internal(
   authStateChanges,
   name: r'authStateChangesProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -35,6 +35,6 @@ final authStateChangesProvider = StreamProvider<AppUser?>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef AuthStateChangesRef = StreamProviderRef<AppUser?>;
+typedef AuthStateChangesRef = StreamProviderRef<User?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

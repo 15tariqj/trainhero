@@ -60,6 +60,14 @@ class DevScreen extends StatelessWidget {
             child: const Text("Message screen"),
           ),
         ),
+        TextButton(
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.flexibleTicket.name),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Flexible Ticket screen"),
+          ),
+        ),
       ],
     );
   }

@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:trainhero/src/routing/app_router.dart';
 
-class LoadingTicketScreen extends StatefulWidget {
-  const LoadingTicketScreen({Key? key}) : super(key: key);
+class LoadingTicketScreen extends ConsumerStatefulWidget {
+  const LoadingTicketScreen({super.key});
 
   @override
-  State<LoadingTicketScreen> createState() => _LoadingTicketScreenState();
+  ConsumerState<LoadingTicketScreen> createState() =>
+      _LoadingTicketScreenState();
 }
 
-class _LoadingTicketScreenState extends State<LoadingTicketScreen> {
+class _LoadingTicketScreenState extends ConsumerState<LoadingTicketScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 2), () {
+      ref.read(goRouterProvider).goNamed(AppRoute.flexibleTicket.name);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
