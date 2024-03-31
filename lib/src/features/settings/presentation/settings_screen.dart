@@ -55,7 +55,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           description:
                               "You can change your full name if it's been entered wrong.",
                           button: "Change Name",
-                          //route: EditNameScreen(),
                         ),
                         const SizedBox(
                           height: 20,
@@ -65,7 +64,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           description:
                               "You can change your banking details for where you’d like your compensation to be transferred.",
                           button: "Change Details",
-                          // route: EditBankingScreen(),
                         ),
                         const SizedBox(height: 20),
                         TextButton(
@@ -126,7 +124,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
                       ],
                     ),
                   ),
