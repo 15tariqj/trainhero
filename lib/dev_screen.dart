@@ -47,6 +47,19 @@ class DevScreen extends StatelessWidget {
             child: const Text("Loading Ticket screen"),
           ),
         ),
+        TextButton(
+          onPressed: () => GoRouter.of(context)
+              .pushNamed(AppRoute.message.name, pathParameters: {
+            'image': "assets/th_dead.png",
+            'heading': "There's been an issue.",
+            'message':
+                "Please try sending your PDF again or email help@trainhero.app for help.",
+          }),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Message screen"),
+          ),
+        ),
       ],
     );
   }
