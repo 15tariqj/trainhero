@@ -10,8 +10,7 @@ class DevScreen extends StatelessWidget {
     return Column(
       children: [
         TextButton(
-          onPressed: () =>
-              GoRouter.of(context).pushNamed(AppRoute.landing.name),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.landing.name),
           child: Container(
             color: Colors.red,
             child: const Text("Landing screen"),
@@ -32,28 +31,24 @@ class DevScreen extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () =>
-              GoRouter.of(context).pushNamed(AppRoute.settings.name),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.settings.name),
           child: Container(
             color: Colors.red,
             child: const Text("Settings screen"),
           ),
         ),
         TextButton(
-          onPressed: () =>
-              GoRouter.of(context).pushNamed(AppRoute.loadingTicket.name),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.loadingTicket.name),
           child: Container(
             color: Colors.red,
             child: const Text("Loading Ticket screen"),
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context)
-              .pushNamed(AppRoute.message.name, pathParameters: {
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.message.name, pathParameters: {
             'image': "assets/th_dead.png",
             'heading': "There's been an issue.",
-            'message':
-                "Please try sending your PDF again or email help@trainhero.app for help.",
+            'message': "Please try sending your PDF again or email help@trainhero.app for help.",
           }),
           child: Container(
             color: Colors.red,
@@ -61,11 +56,24 @@ class DevScreen extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () =>
-              GoRouter.of(context).pushNamed(AppRoute.flexibleTicket.name),
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.flexibleTicket.name),
           child: Container(
             color: Colors.red,
             child: const Text("Flexible Ticket screen"),
+          ),
+        ),
+        TextButton(
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.flexibleTicketTimes.name),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Flexible Ticket Similar Time screen"),
+          ),
+        ),
+        TextButton(
+          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.login.name),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Login screen"),
           ),
         ),
       ],

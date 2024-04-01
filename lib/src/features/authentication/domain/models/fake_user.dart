@@ -1,4 +1,4 @@
-import 'package:trainhero/src/features/authentication/domain/user.dart';
+import 'package:trainhero/src/features/authentication/domain/models/user.dart';
 
 /// Fake user class used to simulate a user account on the backend
 class FakeUser extends User {

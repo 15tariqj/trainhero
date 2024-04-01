@@ -1,11 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trainhero/dev_screen.dart';
-import 'package:trainhero/src/features/authentication/data/auth_repository.dart';
-import 'package:trainhero/src/features/flexible_ticket/presentation/flexible_ticket_screen.dart';
+import 'package:trainhero/src/features/authentication/data/repositories/auth_repository.dart';
+import 'package:trainhero/src/features/login/presentation/login_screen.dart';
+import 'package:trainhero/src/features/ticket_flow/domain/models/train_times.dart';
+import 'package:trainhero/src/features/ticket_flow/presentation/flexible_ticket_screen.dart';
+import 'package:trainhero/src/features/ticket_flow/presentation/flexible_ticket_similar_times_screen.dart';
 import 'package:trainhero/src/features/home/presentation/home_screen.dart';
 import 'package:trainhero/src/features/landing/presentation/landing_screen.dart';
-import 'package:trainhero/src/features/loading_ticket/presentation/loading_ticket_screen.dart';
+import 'package:trainhero/src/features/ticket_flow/presentation/loading_ticket_screen.dart';
 import 'package:trainhero/src/features/mail/presentation/mail_screen.dart';
 import 'package:trainhero/src/features/message/presentation/message_screen.dart';
 import 'package:trainhero/src/features/settings/presentation/settings_screen.dart';
@@ -23,6 +26,8 @@ enum AppRoute {
   loadingTicket,
   message,
   flexibleTicket,
+  flexibleTicketTimes,
+  login,
 }
 
 @Riverpod(keepAlive: true)
@@ -90,6 +95,24 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/flexibleTicket',
         name: AppRoute.flexibleTicket.name,
         builder: (context, state) => FlexibleTicketScreen(),
+      ),
+      GoRoute(
+        path: '/flexibleTicketTimes',
+        name: AppRoute.flexibleTicketTimes.name,
+        builder: (context, state) => FlexibleTicketSimilarTimesScreen(
+          possibleTrainTimes: [
+            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
+            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
+            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
+            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
+            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
+          ],
+        ),
+      ),
+      GoRoute(
+        path: '/login',
+        name: AppRoute.login.name,
+        builder: (context, state) => LoginScreen(),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),

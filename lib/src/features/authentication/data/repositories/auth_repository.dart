@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:trainhero/src/features/authentication/domain/user.dart';
+import 'package:trainhero/src/features/authentication/domain/models/user.dart';
 import 'package:trainhero/src/utils/in_memory_store.dart';
 
 part 'auth_repository.g.dart';
