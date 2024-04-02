@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:trainhero/main.dart';
+import 'package:trainhero/src/features/ticket_flow/data/ticket_repository.dart';
 import 'package:trainhero/src/routing/app_router.dart';
 
-class LoadingTicketScreen extends ConsumerStatefulWidget {
+class LoadingTicketScreen extends HookConsumerWidget {
   const LoadingTicketScreen({super.key});
 
   @override
-  ConsumerState<LoadingTicketScreen> createState() =>
-      _LoadingTicketScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final sharedFiles = ref.watch(sharedFileProvider);
 
-class _LoadingTicketScreenState extends ConsumerState<LoadingTicketScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      ref.read(goRouterProvider).goNamed(AppRoute.flexibleTicket.name);
-    });
-  }
+    useEffect(() {
+      if (sharedFiles.isNotEmpty) {
+        ref.read(ticketResponseProvider.future).then(
+          (ticketResponse) {
+            ref.read(ticketResponseStateProvider.notifier).state = ticketResponse;
+            ref.read(goRouterProvider).pushNamed(AppRoute.flexibleTicket.name);
+          },
+        ).catchError(
+          (error) {},
+        );
+      }
+      return null;
+    }, [sharedFiles]);
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff2C2C44),
       body: SafeArea(

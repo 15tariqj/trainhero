@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:group_button/group_button.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:trainhero/src/features/authentication/data/repositories/auth_repository.dart';
+import 'package:trainhero/src/features/ticket_flow/data/ticket_repository.dart';
 import 'package:trainhero/src/routing/app_router.dart';
 
 class FlexibleTicketScreen extends HookConsumerWidget {
@@ -24,6 +25,7 @@ class FlexibleTicketScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(authStateChangesProvider).value;
+    final ticketResponse = ref.watch(ticketResponseStateProvider);
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 1500),
     )..forward();

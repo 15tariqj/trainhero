@@ -7,6 +7,8 @@ import 'package:trainhero/src/routing/app_router.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
+final sharedFileProvider = StateProvider<List<SharedMediaFile>>((ref) => []);
+
 void main() async {
   await dotenv.load();
   runApp(
@@ -27,10 +29,10 @@ class MyApp extends HookConsumerWidget {
     useEffect(() {
       // Listen to media sharing coming from outside the app while the app is in the memory.
       intentSub.value = ReceiveSharingIntent.getMediaStream().listen((value) {
-        sharedFiles.value = value;
-        print(sharedFiles.value.map((f) => f.toMap()));
+        ref.read(sharedFileProvider.notifier).state = value;
+        print(value.map((f) => f.toMap()));
         // Navigate to the loadingTicket screen when a file is received
-        if (sharedFiles.value.isNotEmpty) {
+        if (value.isNotEmpty) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ref.read(goRouterProvider).goNamed(AppRoute.loadingTicket.name);
           });
@@ -41,11 +43,11 @@ class MyApp extends HookConsumerWidget {
 
       // Get the media sharing coming from outside the app while the app is closed.
       ReceiveSharingIntent.getInitialMedia().then((value) {
-        sharedFiles.value = value;
-        print(sharedFiles.value.map((f) => f.toMap()));
+        ref.read(sharedFileProvider.notifier).state = value;
+        print(value.map((f) => f.toMap()));
         // Tell the library that we are done processing the intent.
         ReceiveSharingIntent.reset();
-        if (sharedFiles.value.isNotEmpty) {
+        if (value.isNotEmpty) {
           // Navigate to the loadingTicket screen when a file is received
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ref.read(goRouterProvider).goNamed(AppRoute.loadingTicket.name);
