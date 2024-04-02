@@ -12,7 +12,7 @@ class FindDeparturesResponse {
     if (json['message'] != null) {
       return FindDeparturesResponse(departures: []);
     }
-    Map<String, dynamic> departureJsons = json['closesDepartures'];
+    Map<String, dynamic> departureJsons = json['closestDepartures'];
     for (Map<String, dynamic> departureJson in departureJsons.values) {
       departures.add(Departure.fromJson(departureJson));
     }

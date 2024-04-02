@@ -99,15 +99,7 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: '/flexibleTicketTimes',
         name: AppRoute.flexibleTicketTimes.name,
-        builder: (context, state) => FlexibleTicketSimilarTimesScreen(
-          possibleTrainTimes: [
-            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
-            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
-            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
-            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
-            TrainTime(arrivalTime: "16:00", departureTime: "17:00"),
-          ],
-        ),
+        builder: (context, state) => const FlexibleTicketSimilarTimesScreen(),
       ),
       GoRoute(
         path: '/login',

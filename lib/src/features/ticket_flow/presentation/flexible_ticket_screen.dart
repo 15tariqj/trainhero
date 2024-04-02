@@ -250,9 +250,11 @@ class FlexibleTicketScreen extends HookConsumerWidget {
                                           onPressed: () async {
                                             if (timeSelected.value) {
                                               loadingData.value = true;
-                                              Future.delayed(const Duration(seconds: 1));
-                                              ref.read(goRouterProvider).pushNamed(AppRoute.flexibleTicketTimes.name);
-                                              loadingData.value = false;
+                                              ref.read(ticketRepositoryProvider).findDepartures().then((departureResponse) {
+                                                ref.read(departuresResponseStateProvider.notifier).state = departureResponse;
+                                                ref.read(goRouterProvider).pushNamed(AppRoute.flexibleTicketTimes.name);
+                                                loadingData.value = false;
+                                              });
                                             }
                                           },
                                           style: TextButton.styleFrom(

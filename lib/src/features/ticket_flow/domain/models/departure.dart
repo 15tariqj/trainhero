@@ -15,8 +15,8 @@ class Departure {
     String arrTimeStr = json['arrTime'];
     String depTimeStr = json['depTime'];
     return Departure(
-      arrivalTime: TimeOfDay(hour: int.parse(arrTimeStr.substring(0, 2)), minute: int.parse(arrTimeStr.substring(0, 2))),
-      departureTime: TimeOfDay(hour: int.parse(depTimeStr.substring(0, 2)), minute: int.parse(depTimeStr.substring(0, 2))),
+      arrivalTime: TimeOfDay(hour: int.parse(arrTimeStr.substring(0, 2)), minute: int.parse(arrTimeStr.substring(2, 4))),
+      departureTime: TimeOfDay(hour: int.parse(depTimeStr.substring(0, 2)), minute: int.parse(depTimeStr.substring(2, 4))),
       toc: json['toc'],
     );
   }
