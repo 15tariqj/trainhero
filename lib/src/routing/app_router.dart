@@ -3,7 +3,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:trainhero/dev_screen.dart';
 import 'package:trainhero/src/features/authentication/data/repositories/auth_repository.dart';
 import 'package:trainhero/src/features/login/presentation/login_screen.dart';
-import 'package:trainhero/src/features/ticket_flow/domain/models/train_times.dart';
 import 'package:trainhero/src/features/ticket_flow/presentation/flexible_ticket_screen.dart';
 import 'package:trainhero/src/features/ticket_flow/presentation/flexible_ticket_similar_times_screen.dart';
 import 'package:trainhero/src/features/home/presentation/home_screen.dart';
@@ -12,6 +11,8 @@ import 'package:trainhero/src/features/ticket_flow/presentation/loading_ticket_s
 import 'package:trainhero/src/features/mail/presentation/mail_screen.dart';
 import 'package:trainhero/src/features/message/presentation/message_screen.dart';
 import 'package:trainhero/src/features/settings/presentation/settings_screen.dart';
+import 'package:trainhero/src/features/ticket_flow/presentation/success_screen.dart';
+import 'package:trainhero/src/features/ticket_flow/presentation/ticket_summary/ticket_summary_screen.dart';
 import 'package:trainhero/src/routing/go_router_refresh_stream.dart';
 import 'package:trainhero/src/routing/not_found_screen.dart';
 
@@ -28,6 +29,8 @@ enum AppRoute {
   flexibleTicket,
   flexibleTicketTimes,
   login,
+  success,
+  ticketSummary,
 }
 
 @Riverpod(keepAlive: true)
@@ -105,6 +108,27 @@ GoRouter goRouter(GoRouterRef ref) {
         path: '/login',
         name: AppRoute.login.name,
         builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
+        path: '/success',
+        name: AppRoute.success.name,
+        builder: (context, state) => const SuccessScreen(),
+      ),
+      GoRoute(
+        path:
+            '/ticketSummary/:origin/:originString/:dest/:destString/:validFrom/:depTime/:returnTkt/:delay/:comp',
+        name: AppRoute.ticketSummary.name,
+        builder: (context, state) => TicketSummaryScreen(
+          origin: state.pathParameters['origin'] ?? '',
+          originString: state.pathParameters['originString'] ?? '',
+          dest: state.pathParameters['dest'] ?? '',
+          destString: state.pathParameters['destString'] ?? '',
+          validFrom: state.pathParameters['validFrom'] ?? '',
+          depTime: state.pathParameters['depTime'] ?? '',
+          returnTkt: int.parse(state.pathParameters['returnTkt'] ?? '0'),
+          delay: int.parse(state.pathParameters['delay'] ?? '0'),
+          comp: double.parse(state.pathParameters['comp'] ?? '0'),
+        ),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundScreen(),

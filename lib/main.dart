@@ -23,7 +23,6 @@ class MyApp extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sharedFiles = useState<List<SharedMediaFile>>([]);
     final intentSub = useState<StreamSubscription?>(null);
 
     useEffect(() {

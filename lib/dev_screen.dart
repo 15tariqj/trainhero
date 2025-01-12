@@ -10,7 +10,8 @@ class DevScreen extends StatelessWidget {
     return Column(
       children: [
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.landing.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.landing.name),
           child: Container(
             color: Colors.red,
             child: const Text("Landing screen"),
@@ -31,24 +32,28 @@ class DevScreen extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.settings.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.settings.name),
           child: Container(
             color: Colors.red,
             child: const Text("Settings screen"),
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.loadingTicket.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.loadingTicket.name),
           child: Container(
             color: Colors.red,
             child: const Text("Loading Ticket screen"),
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.message.name, pathParameters: {
+          onPressed: () => GoRouter.of(context)
+              .pushNamed(AppRoute.message.name, pathParameters: {
             'image': "assets/th_dead.png",
             'heading': "There's been an issue.",
-            'message': "Please try sending your PDF again or email help@trainhero.app for help.",
+            'message':
+                "Please try sending your PDF again or email help@trainhero.app for help.",
           }),
           child: Container(
             color: Colors.red,
@@ -56,14 +61,16 @@ class DevScreen extends StatelessWidget {
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.flexibleTicket.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.flexibleTicket.name),
           child: Container(
             color: Colors.red,
             child: const Text("Flexible Ticket screen"),
           ),
         ),
         TextButton(
-          onPressed: () => GoRouter.of(context).pushNamed(AppRoute.flexibleTicketTimes.name),
+          onPressed: () =>
+              GoRouter.of(context).pushNamed(AppRoute.flexibleTicketTimes.name),
           child: Container(
             color: Colors.red,
             child: const Text("Flexible Ticket Similar Time screen"),
@@ -74,6 +81,24 @@ class DevScreen extends StatelessWidget {
           child: Container(
             color: Colors.red,
             child: const Text("Login screen"),
+          ),
+        ),
+        TextButton(
+          onPressed: () => GoRouter.of(context)
+              .pushNamed(AppRoute.ticketSummary.name, pathParameters: {
+            'origin': 'LDN',
+            'originString': 'London',
+            'dest': 'MAN',
+            'destString': 'Manchester',
+            'validFrom': '20240320',
+            'depTime': '10:00',
+            'returnTkt': '0',
+            'delay': '15',
+            'comp': '200'
+          }),
+          child: Container(
+            color: Colors.red,
+            child: const Text("Ticket Summary Screen"),
           ),
         ),
       ],

@@ -82,8 +82,8 @@ class LoginScreen extends HookConsumerWidget {
         _backgroundColor = const Color(0xFF8A89DB);
         _headingColor = Colors.white;
         headingTop.value = screenHeight / 12.5;
-        loginOpacity.value = 0.7;
-        loginHeight.value = keyboardVisible.value ? screenHeight : screenHeight - screenHeight / 3;
+        loginOpacity.value = 0;
+        loginHeight.value = 0;
         registerHeight.value = keyboardVisible.value ? screenHeight : screenHeight - screenHeight / 2.75;
         registerOpacity.value = 1;
         nameHeight.value = 0;
@@ -94,10 +94,10 @@ class LoginScreen extends HookConsumerWidget {
         _backgroundColor = const Color(0xFF8A89DB);
         _headingColor = Colors.white;
         headingTop.value = screenHeight / 15;
-        loginOpacity.value = 0.5;
-        loginHeight.value = keyboardVisible.value ? screenHeight : screenHeight - screenHeight / 3.25;
-        registerOpacity.value = 0.7;
-        registerHeight.value = keyboardVisible.value ? screenHeight : screenHeight - screenHeight / 3;
+        loginOpacity.value = 0;
+        loginHeight.value = 0;
+        registerOpacity.value = 0;
+        registerHeight.value = 0;
         nameHeight.value = keyboardVisible.value ? screenHeight : screenHeight - screenHeight / 2.75;
         nameOpacity.value = 1;
         break;
@@ -111,17 +111,23 @@ class LoginScreen extends HookConsumerWidget {
           duration: const Duration(milliseconds: 1000),
           color: _backgroundColor,
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Stack(
               alignment: Alignment.bottomCenter,
               children: <Widget>[
                 GestureDetector(
                   behavior: containerState.value == LoginContainerStates.closed ? HitTestBehavior.opaque : HitTestBehavior.translucent,
-                  child: AnimatedContainer(
+                  child: SingleChildScrollView(
+                    physics: containerState.value == LoginContainerStates.closed 
+                        ? const ClampingScrollPhysics()
+                        : const NeverScrollableScrollPhysics(),
+                    child: AnimatedContainer(
                       curve: Curves.fastLinearToSlowEaseIn,
                       duration: const Duration(milliseconds: 1000),
                       color: _backgroundColor,
+                      height: screenHeight,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
@@ -136,7 +142,7 @@ class LoginScreen extends HookConsumerWidget {
                                     top: headingTop.value,
                                   ),
                                   child: Text(
-                                    "Login to claim",
+                                    "Sign in to claim",
                                     style: TextStyle(color: _headingColor, fontSize: 28, fontWeight: FontWeight.w600),
                                   ),
                                 ),
@@ -220,7 +226,7 @@ class LoginScreen extends HookConsumerWidget {
                                     ),
                                     GestureDetector(
                                       onTap: () async {
-                                        if (await canLaunchUrl(Uri.parse('http://109.228.36.170/privacy-notice/'))) {
+                                        if (await canLaunchUrl(Uri.parse('http://109.228.36.170/privacy-notice/'))){
                                           await launchUrl(Uri.parse('http://109.228.36.170/privacy-notice/'));
                                         } else {
                                           throw 'Could not launch url';
@@ -242,7 +248,9 @@ class LoginScreen extends HookConsumerWidget {
                             ),
                           ),
                         ],
-                      )),
+                      ),
+                    ),
+                  ),
                 ),
 
                 // Login Container
@@ -262,7 +270,9 @@ class LoginScreen extends HookConsumerWidget {
                       ),
                     ),
                     child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: containerState.value == LoginContainerStates.login 
+                          ? const ClampingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -273,7 +283,7 @@ class LoginScreen extends HookConsumerWidget {
                                 child: Opacity(
                                   opacity: containerState.value == LoginContainerStates.name ? 0 : 1,
                                   child: const Text(
-                                    "Login To Continue",
+                                    "Sign in To Continue",
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
@@ -307,7 +317,7 @@ class LoginScreen extends HookConsumerWidget {
                                 child: const SizedBox(
                                   width: double.maxFinite,
                                   child: PrimaryButton(
-                                    text: "Login",
+                                    text: "Sign in",
                                   ),
                                 ),
                               ),
@@ -346,69 +356,74 @@ class LoginScreen extends HookConsumerWidget {
                         topRight: Radius.circular(25),
                       ),
                     ),
-                    child: Column(
-                      children: <Widget>[
-                        SingleChildScrollView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.only(bottom: screenHeight / 36.872),
-                                child: const Text(
-                                  "Create a New Account",
-                                  style: TextStyle(fontSize: 20),
+                    child: SingleChildScrollView(
+                      physics: containerState.value == LoginContainerStates.register 
+                          ? const ClampingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
+                      child: Column(
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            physics: const NeverScrollableScrollPhysics(),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(bottom: screenHeight / 36.872),
+                                  child: const Text(
+                                    "Create a New Account",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                 ),
-                              ),
-                              InputWithIcon(
-                                icon: Icons.email,
-                                hint: "Enter Email",
-                                controller: emailController,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              InputWithIcon(
-                                icon: Icons.vpn_key,
-                                hint: "Enter Password",
-                                controller: passwordController,
-                                isPasswordField: true,
-                              ),
-                              Container(
-                                color: Colors.black,
-                                child: const SizedBox(
+                                InputWithIcon(
+                                  icon: Icons.email,
+                                  hint: "Enter Email",
+                                  controller: emailController,
+                                ),
+                                const SizedBox(
                                   height: 10,
                                 ),
-                              ),
-                            ],
+                                InputWithIcon(
+                                  icon: Icons.vpn_key,
+                                  hint: "Enter Password",
+                                  controller: passwordController,
+                                  isPasswordField: true,
+                                ),
+                                Container(
+                                  color: Colors.black,
+                                  child: const SizedBox(
+                                    height: 10,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Column(
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                containerState.value = LoginContainerStates.name;
-                              },
-                              child: const SizedBox(
-                                width: double.maxFinite,
-                                child: PrimaryButton(
-                                  text: "Next",
+                          Column(
+                            children: <Widget>[
+                              GestureDetector(
+                                onTap: () {
+                                  containerState.value = LoginContainerStates.name;
+                                },
+                                child: const SizedBox(
+                                  width: double.maxFinite,
+                                  child: PrimaryButton(
+                                    text: "Next",
+                                  ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                containerState.value = LoginContainerStates.login;
-                              },
-                              child: const OutlineButton(
-                                text: "Login Instead",
+                              const SizedBox(
+                                height: 40,
                               ),
-                            )
-                          ],
-                        ),
-                      ],
+                              GestureDetector(
+                                onTap: () {
+                                  containerState.value = LoginContainerStates.login;
+                                },
+                                child: const OutlineButton(
+                                  text: "Login Instead",
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -430,7 +445,9 @@ class LoginScreen extends HookConsumerWidget {
                       ),
                     ),
                     child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
+                      physics: containerState.value == LoginContainerStates.name 
+                          ? const ClampingScrollPhysics()
+                          : const NeverScrollableScrollPhysics(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
